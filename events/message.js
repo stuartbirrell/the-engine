@@ -12,7 +12,11 @@ module.exports = class {
 
     // Grab the settings for this server from the PersistentCollection
     // If there is no guild, get default conf (DMs)
-    const settings = ( message.guild ) ? this.bot.getSettings(message.guild.id) : this.bot.config.defaultSettings;
+
+    var settings = await this.bot.getSettings(message.guild.id);
+
+
+    //const settings = ( message.guild ) ? this.bot.getSettings(message.guild.id) : this.bot.config.defaultSettings;
 
     // For ease of use in commands and functions, we'll attach the settings
     // to the message object, so `message.settings` is accessible.

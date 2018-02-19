@@ -24,17 +24,17 @@ module.exports = class {
     }, 60000);
 
     // This step will re-write the "default" settings into the database on first start-up (to ensure that any changes in code are picked up)
-    if (!this.bot.settings.has("default")) {
-      if (!this.bot.config.defaultSettings) throw new Error("defaultSettings not preset in config.js or settings database. Bot cannot load.");
-      this.bot.settings.set("default", this.bot.config.defaultSettings);
-    }
+    //if (!this.bot.settings().has("default")) {
+    //  if (!this.bot.config.defaultSettings) throw new Error("defaultSettings not preset in config.js or settings database. Bot cannot load.");
+    //  this.bot.settings.set("default", this.bot.config.defaultSettings);
+    //}
 
     // Initializes the dashboard, which must be done on ready otherwise some data may be missing.
     require("../dashboard/index.js")(this.bot);
     
     // Set the game as the default help command + guild count.
     // NOTE: This is also set in the guildCreate and guildDelete events!
-    this.bot.user.setActivity({game: {name: `${this.bot.settings.get("default").prefix}help | ${this.bot.guilds.size} Servers`, type:0}});
+    this.bot.user.setActivity({game: {name: `${this.bot.config.defaultSettings.prefix}help | ${this.bot.guilds.size} Servers`, type:0}});
 
     // Log that we're ready to serve, so we know the bot accepts commands.
     this.bot.logger.log(`${this.bot.user.tag}, ready to serve ${this.bot.users.size} users in ${this.bot.guilds.size} servers.`, "ready");  }

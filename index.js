@@ -8,33 +8,58 @@ const Enmap = require("enmap");
 const EnmapLevel = require("enmap-level");
 const klaw = require("klaw");
 const path = require("path");
-const dbService = require("./services/db.service.js");
-
 
 class TheEngineBot extends Discord.Client {
 
   constructor(options) {
-    super(options);
+      super(options);
 
-    this.config = require("./config.js");
+      this.config = require("./config.js");
 
-    // Aliases and commands are put in collections
-    this.commands = new Enmap();
-    this.aliases = new Enmap();
+      // Aliases and commands are put in collections
+      this.commands = new Enmap();
+      this.aliases = new Enmap();
 
-    this.dbConnection = require('./services/db.service');
+      this.settings = new Map();
 
-    // Now we integrate the use of Evie's awesome Enhanced Map module, which
-    // essentially saves a collection to disk. This is great for per-server configs,
-    // and makes things extremely easy for this purpose.
-    //TODO: Need to convert this to fetch all server settings from the database
-    this.settings = new Enmap({ provider: new EnmapLevel({ name: "settings" }) });
+      this.dbConnection = require('./services/db.service');
+
+      // Now we integrate the use of Evie's awesome Enhanced Map module, which
+      // essentially saves a collection to disk. This is great for per-server configs,
+      // and makes things extremely easy for this purpose.
+      //TODO: Need to convert this to fetch all server settings from the database
+      //this.settings = new Enmap({ provider: new EnmapLevel({ name: "settings" }) });
+      //this.getAllSettingsFromDatabase().then(
+      //  function (result) {
+      //      console.log("Result = " + result);
+      //      this.settings = result;
+      //  })
+      //this.settings = this.getAllSettingsFromDatabase().then(function(result){
+      //    return result;
+      //});
+
+      this.loadBot();
 
     // Requiring the Logger class for easy console logging
     this.logger = require("./util/Logger");
 
 
   }
+
+
+  async loadBot(){
+
+      var settingsArray = await this.refreshSettingsFromDatabase();
+
+      var arrayLength = settingsArray.length;
+      for (var i = 0; i < arrayLength; i++) {
+          this.settings.set(settingsArray[i]._id, settingsArray[i]);
+      }
+
+      console.log("Loaded all of the server settings from the database");
+  }
+
+
 
   /*
   PERMISSION LEVEL FUNCTION
@@ -126,7 +151,65 @@ class TheEngineBot extends Discord.Client {
     return returnObject;
   }
 
-  // writeSettings overrides, or adds, any configuration item that is different
+    async getSettingsNew(id) {
+        try {
+            let db = await this.dbConnection.Get();
+            return await db.collection('server-settings').findOne({_id:id});
+        } catch (e) {
+            return e;
+        }
+
+    }
+
+
+    async refreshSettingsFromDatabase(){
+      try {
+            let db = await this.dbConnection.Get();
+            return await db.collection('server-settings').find({}).toArray()
+        } catch (e) {
+            return e;
+        }
+    }
+
+
+  async getAllSettingsFromDatabase() {
+      try {
+          let db = await this.dbConnection.Get();
+          let result = await db.collection('server-settings').find({}).toArray();
+
+          return result;
+      } catch (e) {
+          return e;
+      }
+  }
+
+ getAllSettingsFromDatabaseSYNC() {
+    try {
+        let db = this.dbConnection.Get();
+        let result = db.collection('server-settings').find({}).toArray();
+
+        return result;
+    } catch (e) {
+        return e;
+    }
+}
+
+  getServerSettingsFromDatabase(id) {
+        const defaults = bot.config.defaultSettings;
+
+        let guild = bot.settings.get(id);
+
+        if (typeof guild != "object") guild = {};
+        const returnObject = {};
+        Object.keys(defaults).forEach((key) => {
+            returnObject[key] = guild[key] ? guild[key] : defaults[key];
+        });
+        return returnObject;
+  }
+
+
+
+    // writeSettings overrides, or adds, any configuration item that is different
   // than the defaults. This ensures less storage wasted and to detect overrides.
   writeSettings(id, newSettings) {
     const defaults = bot.config.defaultSettings;
@@ -153,7 +236,7 @@ class TheEngineBot extends Discord.Client {
       try {
           let db = await this.dbConnection.Get();
           let result = await db.collection('server-settings').insertOne(settings);
-
+          console.log(results)
           return result;
       } catch (e) {
           return e;

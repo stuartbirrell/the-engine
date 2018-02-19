@@ -1,4 +1,8 @@
+this.defaultSettings = require("./defaultGuildSettings.js");
+
 const config = {
+    defaultSettings: this.defaultSettings
+
   // Bot Owner, level 10 by default. You no longer need to supply the owner ID, as the bot
   // will pull this information directly from it's application page.
 

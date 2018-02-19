@@ -6,27 +6,68 @@ const defaultSettings = {
     systemNotice: "true",
     audit:{
         enabled: true,
-        channel: "channel-log"
+        channel: "channel-log",
+        channelBlacklist:[
+            "admin-chat",
+            "mod-chat"
+        ],
+        actions:{
+            channelCreate: "true",
+            channelDelete: "true",
+            channelPinsUpdate: "true",
+            channelCreate: "true",
+            channelUpdate: "true",
+            clientUserGuildSettingsUpdate: "true",
+            clientUserSettingsUpdate: "true",
+            emojiCreate: "true",
+            emojiUpdate: "true",
+            emojiDelete: "true",
+            guildBanAdd: "true",
+            guildBanRemove: "true",
+            guildCreate: "true",
+            guildDelete: "true",
+            guildMemberAdd: "true",
+            guildMemberAvailable: "true",
+            guildMemberRemove: "true",
+            guildMemberUpdate: "true",
+            guildUpdate: "true",
+            message: "true",
+            messageDelete: "true",
+            messageDeleteBulk: "true",
+            messageReactionAdd: "true",
+            messageReactionRemove: "true",
+            messageReactionRemoveAll: "true",
+            messageUpdate: "true",
+            roleCreate: "true",
+            roleDelete: "true",
+            roleUpdate: "true",
+            userUpdate: "true"
+        }
     },
     roles:{
         modRole: "Moderator",
         adminRole: "Admin"
     },
     eventMessages:{
-        welcome:{
-            enabled: "false",
+        userJoin:{
+            enabled: "true",
             channel: "Welcome",
             message: "Say hello to {{user}}, everyone! We all need a warm welcome sometimes :D"
         },
-        kick:{
-            enabled: "false",
-            channel: "Kicked",
-            message: "{{user}} has been kicked"
+        userLeave:{
+            enabled: "true",
+            channel: "Welcome",
+            message: "Say goodbye to {{user}}, everyone! They were a cunt anyway :D"
         },
-        ban:{
-            enabled: "false",
-            channel: "Banned",
-            message: "{{user}} has been BANNED!"
+        userBanned:{
+            enabled: "true",
+            channel: "Welcome",
+            message: "{{user}} has been banned!"
+        },
+        userUnbanned:{
+            enabled: "true",
+            channel: "Welcome",
+            message: "{{user}}'s ban has been lifted"
         }
     }
 };

@@ -6,7 +6,7 @@ module.exports = class {
   }
 
   async run(guild) {
-    this.bot.user.setPresence({game: {name: `${this.bot.settings.get("default").prefix}help | ${this.bot.guilds.size} Servers`, type:0}});
+    this.bot.user.setPresence({game: {name: `${this.bot.config.defaultSettings.prefix}help | ${this.bot.guilds.size} Servers`, type:0}});
     
     // Well they're gone. Let's remove them from the settings!
     this.bot.settings.delete(guild.id);
