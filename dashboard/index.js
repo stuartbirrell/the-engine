@@ -55,6 +55,7 @@ module.exports = function(bot){
         res.render(path.resolve(`${templateDir}${path.sep}${template}`), Object.assign(baseData, data));
     });
 
+
     app.set('checkAuth', function(req, res, next){
         if (req.isAuthenticated()) return next();
         req.session.backURL = req.url;

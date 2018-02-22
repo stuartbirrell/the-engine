@@ -1,23 +1,32 @@
 <%- include('blocks/header', {bot, user, path}) %>
 
-<div class="container">
-  <div class="row">
-    <div class="col-lg-8">
-        <div class="card text-white bg-primary mb-3">
-          <div class="card-header"><%= bot.user.username %> Dashboard</div>
-          <div class="card-body">
-            <h4 class="card-title">Welcome to <b>The Engine</b></h4>
-            <p class="card-text">A fully featured channel administration bot with a difference.</p>
-            <p><a class="btn btn-primary" href="/commands" role="button">Command Help »</a></p>
-          </div>
-        </div>
-      </div>
-    <div class="col-lg-4">
-        <div class="card text-white bg-primary mb-3">
-            <%- include('cards/bot-stats', {bot, user, path}) %>
-        </div>
-    </div>
-  </div>
+<div class="jumbotron">
+    <h1 class="display-5">A new era of Discord management begins here...</h1>
+    <p>Welcome to the engine!</p>
+    <p><a class="btn btn-primary btn-lg" href="#" role="button">Add to my server <i class="fa fa-fw fa-chevron-circle-right" aria-hidden="true"></i></a></p>
 </div>
 
+
+<div class="container post-jumbotron-container">
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header"><%= bot.user.username %> Dashboard</div>
+                <div class="card-body">
+                    <h4 class="card-title">Welcome to <b>The Engine</b></h4>
+                    <p class="card-text">A fully featured channel administration bot with a difference.</p>
+                    <p><a class="btn btn-primary" href="/commands" role="button">Command Help »</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card text-white bg-primary mb-3">
+                <%- include('cards/bot-stats', {bot, user, path}) %>
+            </div>
+        </div>
+    </div>
+</div>
+
+</main>
 <% include ./blocks/footer %>

@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pReDaToR114/the-engine"
+    "url": "git+https://github.com/stuartbirrell/the-engine"
   },
   "author": "Stuart Birrell <dev@stuartbirrell.com>",
   "contributors": [
@@ -18,9 +18,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pReDaToR114/the-engine/issues"
+    "url": "https://github.com/stuartbirrell/the-engine/issues"
   },
-  "homepage": "https://github.com/pReDaToR114/the-engine#readme",
+  "homepage": "https://github.com/stuartbirrell/the-engine#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
     "chalk": "^2.3.0",

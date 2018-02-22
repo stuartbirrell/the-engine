@@ -1,45 +1,79 @@
 <%- include('../blocks/header', {bot, user, path}) %>
 <h2>Server Management</h2>
 <div class="row">
-  <div class="col col-4">
-    <%- include('../blocks/guild-card', {guild}) %>
-  </div>
-  <div class="col">
-    <%- include('../blocks/guild-nav.ejs', {active: "manage", guild}) %>
-    <form method="post">
-      <ul class="list-group list-group-flush">
-      <% const settings = bot.getSettings(guild.id);
-          for (const key in settings) {
-            if( typeof settings[key] == "object" ){
 
+  <div class="nav-side-menu">
+    <div class="brand">Brand Logo</div>
+    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
 
-            }
-            else{%>
-        <li class="list-group-item" style="padding: 0;">
-          <label class="sr-only" for="<%= key %>">
-            <%= key %>
-          </label>
-          <div class="input-group mb-2 mr-sm-2 mb-sm-0" style="width: 100%; margin: 0 !important;">
-            <div class="input-group-addon" style="width: 150px; text-align: right; margin: 0;">
-              <%= key %>
-            </div>
-            <input type="text" class="form-control" style="text-align: left;" name="<%= key %>" id="<%= key %>" value="<%= settings[key] %>"
-              placeholder="Enter <%= key %>">
-          </div>
+    <div class="menu-list">
+
+      <ul id="menu-content" class="menu-content collapse out">
+        <li>
+          <a href="#">
+            <i class="fa fa-dashboard fa-lg"></i> Dashboard
+          </a>
         </li>
-        <% }
-          } %>
+
+        <li  data-toggle="collapse" data-target="#products" class="collapsed active">
+          <a href="#"><i class="fa fa-gift fa-lg"></i> UI Elements <span class="arrow"></span></a>
+        </li>
+        <ul class="sub-menu collapse" id="products">
+          <li class="active"><a href="#">CSS3 Animation</a></li>
+          <li><a href="#">General</a></li>
+          <li><a href="#">Buttons</a></li>
+          <li><a href="#">Tabs & Accordions</a></li>
+          <li><a href="#">Typography</a></li>
+          <li><a href="#">FontAwesome</a></li>
+          <li><a href="#">Slider</a></li>
+          <li><a href="#">Panels</a></li>
+          <li><a href="#">Widgets</a></li>
+          <li><a href="#">Bootstrap Model</a></li>
+        </ul>
+
+
+        <li data-toggle="collapse" data-target="#service" class="collapsed">
+          <a href="#"><i class="fa fa-globe fa-lg"></i> Services <span class="arrow"></span></a>
+        </li>
+        <ul class="sub-menu collapse" id="service">
+          <li>New Service 1</li>
+          <li>New Service 2</li>
+          <li>New Service 3</li>
+        </ul>
+
+
+        <li data-toggle="collapse" data-target="#new" class="collapsed">
+          <a href="#"><i class="fa fa-car fa-lg"></i> New <span class="arrow"></span></a>
+        </li>
+        <ul class="sub-menu collapse" id="new">
+          <li>New New 1</li>
+          <li>New New 2</li>
+          <li>New New 3</li>
+        </ul>
+
+
+        <li>
+          <a href="#">
+            <i class="fa fa-user fa-lg"></i> Profile
+          </a>
+        </li>
+
+        <li>
+          <a href="#">
+            <i class="fa fa-users fa-lg"></i> Users
+          </a>
+        </li>
       </ul>
-      <div style="width: 100%; text-align: right; margin-top: 20px;">
-        <a class="btn btn-danger" data-toggle="modal" data-target="#settingsResetModal" role="button">Reset Defaults <i class="fa fa-fw fa-cogs" aria-hidden="true"></i></a>
-        <button type="submit" class="btn btn-primary">Save Changes <i class="fa fa-fw fa-save" aria-hidden="true"></i></button>
-      </div>
-    </form>
+    </div>
   </div>
+
 </div>
+
 <% include ../blocks/guild-modals %>
+
 <script type="text/javascript">
   var ts = parseInt($('#guildCreate').text());
   $('#guildCreate').html(`<strong>Created:</strong>: ${moment(ts).format('MMMM Do YYYY (h:mm a)')}`);
 </script>
+
 <% include ../blocks/footer %>

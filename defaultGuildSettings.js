@@ -4,6 +4,25 @@ const defaultSettings = {
     modRole: "Moderator",
     adminRole: "Administrator",
     systemNotice: "true",
+    inviteControl: {
+        enabled: "true",
+        tempInviteWhiteList: [""],
+        defaultInviteWhiteList: ["can-invite"],
+        defaultInviteTemplate: {
+            temporary:false,
+            maxAge: 86400,
+            maxUses: 1,
+            unique: true,
+            reason: "Bot generated default invite by user {{user}}"
+        },
+        tempInviteTemplate:{
+            temporary:true,
+            maxAge: 86400,
+            maxUses: 1,
+            unique: true,
+            reason: "Bot generated temporary invite by user {{user}}"
+        }
+    },
     audit:{
         enabled: true,
         channel: "channel-log",
@@ -70,6 +89,7 @@ const defaultSettings = {
             message: "{{user}}'s ban has been lifted"
         }
     }
+
 };
 
 
