@@ -1,4 +1,4 @@
-const Command = require("../Command");
+const Command = require("../../Command");
 const { version } = require("discord.js");
 const moment = require("moment");
 require("moment-duration-format");
@@ -8,6 +8,7 @@ class Stats extends Command {
     super(client, {
       name: "stats",
       description: "Gives some useful bot statistics.",
+        category: "Miscellaneous",
       usage: "stats",
     });
   }

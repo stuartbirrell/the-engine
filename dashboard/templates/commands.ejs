@@ -1,40 +1,101 @@
 <%- include('blocks/header', {bot, user, path}) %>
 
-<% const help = {};
-bot.commands.forEach((command) => {
-  const cat = command.help.category;
-  if (!help.hasOwnProperty(cat)) help[cat] = [];
-  help[cat].push(command);
+<%
+var sortedCategoryList = [];
+var commandList = {};
+
+bot.commands.forEach((cmd) => {
+    const cat = cmd.help.category;
+    if (!sortedCategoryList.includes(cat)) sortedCategoryList.push(cat);
+});
+
+// Sort the catrgories
+sortedCategoryList.sort();
+
+// Add them to the commandList in the sorted order
+sortedCategoryList.forEach(function(element) {
+    commandList[element] = [];
+});
+
+bot.commands.forEach((cmd) => {
+    const category = cmd.help.category;
+    if (!commandList.hasOwnProperty(category)) commandList[category] = [];
+    commandList[category].push(cmd);
 });
 %>
-  <% for (const category in help) { %>
-    <h3><%= category %></h3>
-    <br>
-    <div class="card-columns">
-      <% for (const command of help[category]) { %>
-        <div class="card">
-          <h3 class="card-header"><%= command.help.name.toProperCase() %></h3>
-          <div class="card-body">
-            <p class="card-text"><%= command.help.description %></p>
-            <h6 class="card-subtitle text-muted">Permission: <%= command.conf.permLevel %><br /><a href="#" data-toggle="modal" data-target="#<%= `${command.help.name}` %>Modal">more...</a></h6>
-          </div>
-        </div>
-        <div id="<%= `${command.help.name}` %>Modal" class="modal fade" role="dialog">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header btn-info disabled">
-                <h4 class="modal-title"><%= command.help.name.toProperCase() %></h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-              </div>
-              <div class="modal-body">
-                <p>Usage Example: <%= command.help.usage %></p>
-                <p>Command Aliases: <%= `${command.conf.aliases.join(', ')}` %></p>
-              </div>
-              <div class="modal-footer"><button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button></div>
-            </div>
-          </div>
-        </div>
-      <% } %>
+
+
+<ul class="container">
+    <div class="page-header">
+        <h1>Commands</h1>
     </div>
-  <% } %>
+    <ul class="nav md-pills nav-justified pills-secondary">
+        <% for (const category in commandList) { %>
+        <li class="nav-item">
+            <a href="#<%= category %>" class="btn btn-secondary w-100 nav-link" role="tab" data-toggle="tab" role="tab"><%= category %></a>
+        </li>
+        <% } %>
+    </ul>
+
+    <hr>
+
+    <div class="card tab-content">
+        <%
+        var i = 0;
+        for (const category in commandList) { %>
+
+        <div class="tab-pane fade in show <% if(i==0){%> active <%}%>%>" id="<%= category %>" role="tabpanel">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Command</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Usage</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <% for (const command of commandList[category]) { %>
+
+                <tr>
+                    <td><%= command.help.name.toProperCase() %></td>
+                    <td><%= command.help.description %></td>
+                    <td><%= command.help.usage %></td>
+                    <td><a href="#" data-toggle="modal" data-target="#<%= `${command.help.name}` %>Modal"><i class="fa fa-fw fa-chevron-circle-right" aria-hidden="true"></i></a></td>
+                </tr>
+                <%}%>
+                </tbody>
+            </table>
+        </div>
+        <%
+            i++;
+        } %>
+    </div>
+
+    <!-- Iterate the list again to pre-build the modal dialogs -->
+    <%
+    for (const category in commandList) {
+        for (const command of commandList[category]) {
+    %>
+    <div id="<%= `${command.help.name}` %>Modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header btn-info disabled">
+                    <h4 class="modal-title"><%= command.help.name.toProperCase() %></h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Usage Example: <%= command.help.usage %></p>
+                    <p>Command Aliases: <%= `${command.conf.aliases.join(', ')}` %></p>
+                </div>
+                <div class="modal-footer"><button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button></div>
+            </div>
+        </div>
+    </div>
+    <%
+        }
+    }
+    %>
+
 <% include ./blocks/footer %>

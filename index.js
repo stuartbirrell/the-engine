@@ -151,17 +151,6 @@ class TheEngineBot extends Discord.Client {
     return returnObject;
   }
 
-    async getSettingsNew(id) {
-        try {
-            let db = await this.dbConnection.Get();
-            return await db.collection('server-settings').findOne({_id:id});
-        } catch (e) {
-            return e;
-        }
-
-    }
-
-
     async refreshSettingsFromDatabase(){
       try {
             let db = await this.dbConnection.Get();
@@ -171,28 +160,6 @@ class TheEngineBot extends Discord.Client {
         }
     }
 
-
-  async getAllSettingsFromDatabase() {
-      try {
-          let db = await this.dbConnection.Get();
-          let result = await db.collection('server-settings').find({}).toArray();
-
-          return result;
-      } catch (e) {
-          return e;
-      }
-  }
-
- getAllSettingsFromDatabaseSYNC() {
-    try {
-        let db = this.dbConnection.Get();
-        let result = db.collection('server-settings').find({}).toArray();
-
-        return result;
-    } catch (e) {
-        return e;
-    }
-}
 
   getServerSettingsFromDatabase(id) {
         const defaults = bot.config.defaultSettings;
