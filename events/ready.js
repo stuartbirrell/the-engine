@@ -34,7 +34,7 @@ module.exports = class {
     
     // Set the game as the default help command + guild count.
     // NOTE: This is also set in the guildCreate and guildDelete events!
-    this.bot.user.setActivity({game: {name: `${this.bot.config.defaultSettings.prefix}help | ${this.bot.guilds.size} Servers`, type:0}});
+    this.bot.user.setActivity({game: {name: `${this.bot.config.defaultSettings.general.prefix}help | ${this.bot.guilds.size} Servers`, type:0}});
 
     // Log that we're ready to serve, so we know the bot accepts commands.
     this.bot.logger.log(`${this.bot.user.tag}, ready to serve ${this.bot.users.size} users in ${this.bot.guilds.size} servers.`, "ready");  }

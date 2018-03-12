@@ -6,6 +6,8 @@ module.exports = function(app, bot, passport){
 
     var Discord = require("discord.js");
 
+    const perms = Discord.EvaluatedPermissions;
+
     serverRouter.use(function(req, res, next) {
         next();
     });
@@ -19,6 +21,71 @@ module.exports = function(app, bot, passport){
     serverRouter.get("/:guildID", app.settings.checkAuth, (req, res) => {
         res.redirect(`/servers/${req.params.guildID}/dashboard`);
     });
+
+
+    serverRouter.get("/:guildID/settings/general", app.settings.checkAuth, (req, res) => {
+        const guild = bot.guilds.get(req.params.guildID);
+        if (!guild) return res.status(404);
+        const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
+        if (!isManaged && !req.session.isAdmin) res.redirect("/");
+        req.app.settings.renderTemplate(res, req, "servers/settings/general.ejs", {guild});
+    });
+
+    serverRouter.get("/:guildID/settings/eventmessages", app.settings.checkAuth, (req, res) => {
+        const guild = bot.guilds.get(req.params.guildID);
+        if (!guild) return res.status(404);
+        const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
+        if (!isManaged && !req.session.isAdmin) res.redirect("/");
+        req.app.settings.renderTemplate(res, req, "servers/settings/event-messages.ejs", {guild});
+    });
+
+    serverRouter.get("/:guildID/settings/invitecontrols", app.settings.checkAuth, (req, res) => {
+        const guild = bot.guilds.get(req.params.guildID);
+        if (!guild) return res.status(404);
+        const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
+        if (!isManaged && !req.session.isAdmin) res.redirect("/");
+        req.app.settings.renderTemplate(res, req, "servers/settings/invite-control.ejs", {guild});
+    });
+
+    serverRouter.get("/:guildID/settings/auditing", app.settings.checkAuth, (req, res) => {
+        const guild = bot.guilds.get(req.params.guildID);
+        if (!guild) return res.status(404);
+        const isManaged = guild && !!guild.member(req.user.id) ? guild.member(req.user.id).permissions.has("MANAGE_GUILD") : false;
+        if (!isManaged && !req.session.isAdmin) res.redirect("/");
+        req.app.settings.renderTemplate(res, req, "servers/settings/auditing.ejs", {guild});
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     serverRouter.get("/:guildID/dashboard", app.settings.checkAuth, (req, res) => {

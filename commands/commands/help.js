@@ -40,7 +40,7 @@ class Help extends Command {
           output += `\u200b\n== ${cat} ==\n`;
           currentCategory = cat;
         }
-        output += `${settings.prefix}${c.help.name}${" ".repeat(longest - c.help.name.length)} :: ${c.help.description}\n`;
+        output += `${settings.general.prefix}${c.help.name}${" ".repeat(longest - c.help.name.length)} :: ${c.help.description}\n`;
       });
       message.channel.send(output, {code:"asciidoc", split: { char: "\u200b" }});
     } else {

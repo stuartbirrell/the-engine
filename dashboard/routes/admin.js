@@ -6,6 +6,8 @@ module.exports = function(app, bot, passport){
 
     var Discord = require("discord.js");
 
+    const perms = Discord.EvaluatedPermissions;
+
     adminRouter.use(function(req, res, next) {
         next();
     });

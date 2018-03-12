@@ -24,13 +24,13 @@ module.exports = class {
 
     // Also good practice to ignore any message that does not start with our prefix,
     // which is set in the configuration file.
-    if (message.content.indexOf(settings.prefix) !== 0) return;
+    if (message.content.indexOf(settings.general.prefix) !== 0) return;
 
     // Here we separate our "command" name, and our "arguments" for the command.
     // e.g. if we have the message "+say Is this the real life?" , we'll get the following:
     // command = say
     // args = ["Is", "this", "the", "real", "life?"]
-    const args = message.content.slice(settings.prefix.length).trim().split(/ +/g);
+    const args = message.content.slice(settings.general.prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 
     // Get the user or member's permission level from the elevation
@@ -49,7 +49,7 @@ module.exports = class {
       return message.channel.send("This command is unavailable via private message. Please run this command in a guild.");
 
     if (level < this.bot.levelCache[cmd.conf.permLevel]) {
-      if (settings.systemNotice === "true") {
+      if (settings.general.systemNotice === "true") {
         return message.channel.send(`You do not have permission to use this command.
 Your permission level is ${level} (${this.bot.config.permLevels.find(l => l.level === level).name})
 This command requires level ${this.bot.levelCache[cmd.conf.permLevel]} (${cmd.conf.permLevel})`);

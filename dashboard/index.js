@@ -47,7 +47,9 @@ module.exports = function(bot){
     app.use("/public", express.static(path.resolve(`${dataDir}${path.sep}public`)));
 
     app.set('renderTemplate', function(res, req, template, data){
+
         const baseData = {
+            perms: Discord.EvaluatedPermissions,
             bot: bot,
             path: req.path,
             user: req.isAuthenticated() ? req.user : null

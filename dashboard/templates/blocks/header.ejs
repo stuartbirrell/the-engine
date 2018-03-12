@@ -43,8 +43,14 @@
             <div class="btn-group">
                 <a class="btn btn-primary dropdown-toggle dropdown-toggle-servers w-100 h-75" data-toggle="dropdown" href="#">Pick a server <span class="caret"></span></a>
                 <ul class="dropdown-menu dropdown-menu-servers w-100">
-                    <% bot.guilds.forEach(guild => { %>
-                    <li class="dropdown-item server-select-dropdown-item"><a href="/servers/<%=guild.id%>"><%=guild.name%></a></li>
+
+                    <% user.guilds.forEach(guild => {
+
+                        const permsOnGuild = new perms(guild.permissions);
+                        if(!permsOnGuild.has("MANAGE_GUILD")) return;%>
+
+                        <li class="dropdown-item server-select-dropdown-item"><a href="/servers/<%=guild.id%>"><%=guild.name%></a></li>
+
                     <% }); %>
                 </ul>
             </div>

@@ -7,6 +7,8 @@ module.exports = function(app, bot, passport){
     var moment = require("moment");
     var md = require("marked");
 
+    const perms = Discord.EvaluatedPermissions;
+
     var rootRouter = express.Router();
 
     rootRouter.use(function(req, res, next) {

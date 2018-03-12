@@ -1,9 +1,10 @@
 const defaultSettings = {
-    prefix: "-",
-    modLogChannel: "mod-log",
-    modRole: "Moderator",
-    adminRole: "Administrator",
-    systemNotice: "true",
+    general: {
+        prefix: "-",
+        modRole: "Moderator",
+        adminRole: "Administrator",
+        systemNotice: "true",
+    },
     inviteControl: {
         enabled: "true",
         tempInviteWhiteList: [""],

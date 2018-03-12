@@ -7,7 +7,7 @@ module.exports = class {
 
   async run(guild) {
 
-    this.bot.user.setPresence({game: {name: `${this.bot.config.defaultSettings.prefix}help | ${this.bot.guilds.size} Servers`, type:0}});
+    this.bot.user.setPresence({game: {name: `${this.bot.config.defaultSettings.general.prefix}help | ${this.bot.guilds.size} Servers`, type:0}});
     this.bot.logger.log(`New guild has been joined: ${guild.name} (${guild.id}) with ${guild.memberCount - 1} members`);
   }
 };
